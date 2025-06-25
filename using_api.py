@@ -3,19 +3,16 @@ from newspaper import Article
 import logging
 from typing import List, Dict
 
-# ---- CONFIGURATION ----
-NEWS_API_KEY = "61bd54ad00314ae2b158e7137ebeaf7e"  # Replace with your actual key
+NEWS_API_KEY = "61bd54ad00314ae2b158e7137ebeaf7e"
 BASE_URL = "https://newsapi.org/v2/everything"
 HEADERS = {"User-Agent": "NewsLLMScraper/1.0"}
 
-# ---- LOGGING ----
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[logging.StreamHandler()]
 )
 
-# ---- HELPER FUNCTION TO GET FULL TEXT ----
 def extract_article_content(url: str) -> str:
     try:
         article = Article(url)
@@ -26,7 +23,6 @@ def extract_article_content(url: str) -> str:
         logging.warning(f"Failed to extract content from {url}: {e}")
         return ""
 
-# ---- MAIN SCRAPER FUNCTION ----
 def fetch_news_articles(keyword: str, max_results: int = 10) -> List[Dict]:
     params = {
         "q": keyword,
@@ -65,7 +61,6 @@ def fetch_news_articles(keyword: str, max_results: int = 10) -> List[Dict]:
         logging.error(f"Request failed: {e}")
         return []
 
-# ---- SAMPLE USAGE ----
 if __name__ == "__main__":
     user_input = input("Enter keyword to search news: ").strip()
     news_data = fetch_news_articles(user_input)

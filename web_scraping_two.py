@@ -3,22 +3,19 @@ from newspaper import Article
 import logging
 from typing import List, Dict
 
-# ---- CONFIG ----
 RSS_FEEDS = [
-    "https://www.indiatoday.in/rss/home",  # India Today
-    "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",  # TOI
-    "https://rss.ndtv.com/rss/ndtvnews-topstories.xml",  # NDTV
-    "https://www.thehindu.com/news/national/feeder/default.rss"  # The Hindu
+    "https://www.indiatoday.in/rss/home",
+    "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+    "https://rss.ndtv.com/rss/ndtvnews-topstories.xml",
+    "https://www.thehindu.com/news/national/feeder/default.rss"
 ]
 
-# ---- LOGGING SETUP ----
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[logging.StreamHandler()]
 )
 
-# ---- FUNCTION TO EXTRACT FULL CONTENT ----
 def extract_article_text(url: str) -> str:
     """Use newspaper3k to extract full article content."""
     try:
@@ -30,7 +27,6 @@ def extract_article_text(url: str) -> str:
         logging.warning(f"Failed to extract content from {url}: {e}")
         return ""
 
-# ---- FUNCTION TO PARSE RSS ----
 def fetch_news_from_rss(keyword: str, max_results: int = 10) -> List[Dict]:
     keyword = keyword.lower()
     matched_articles = []
@@ -65,7 +61,6 @@ def fetch_news_from_rss(keyword: str, max_results: int = 10) -> List[Dict]:
     logging.info(f"Found {len(matched_articles)} matching articles for keyword '{keyword}'")
     return matched_articles
 
-# ---- SAMPLE USAGE ----
 if __name__ == "__main__":
     user_input = input("Enter keyword to search in RSS feeds: ").strip()
     news_items = fetch_news_from_rss(user_input)
